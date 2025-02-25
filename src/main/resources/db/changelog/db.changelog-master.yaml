@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/202502211628__init_tables.sql
   - include:
       file: db/changelog/202502221831__addUniqueConstraintToUserEmail.sql
+  - include:
+      file: db/changelog/202502252059__add_default_for_user_create_date.sql

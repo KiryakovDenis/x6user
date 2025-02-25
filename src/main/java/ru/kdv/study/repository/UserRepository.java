@@ -1,9 +1,6 @@
 package ru.kdv.study.repository;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -11,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import ru.kdv.study.exception.DataBaseException;
 import ru.kdv.study.exception.NoDataFoundException;
 import ru.kdv.study.model.User;
-import ru.kdv.study.repository.mapper.UserExistMapper;
 import ru.kdv.study.repository.mapper.UserMapper;
 
 import java.time.LocalDateTime;
@@ -21,14 +17,15 @@ import java.time.LocalDateTime;
 public class UserRepository {
     private static String INSERT = """
             INSERT 
-              INTO user_service."user" ("name", email, create_date) 
-            VALUES(:name, :email, :create_date)
+              INTO user_service."user" ("name", email) 
+            VALUES(:name, :email)
             RETURNING *
             """;
 
     private static String UPDATE = """
             UPDATE user_service."user"
-               SET name = :name
+               SET name = :name,
+                   email = :email
              WHERE id = :id
             RETURNING *
             """;
@@ -47,7 +44,6 @@ public class UserRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final UserMapper userMapper;
-    private final UserExistMapper userExistMapper;
 
     public User insert(final User user) {
         try {
@@ -73,9 +69,10 @@ public class UserRepository {
         }
     }
 
-    public Boolean userExist(Long id) {
+    public boolean userExist(Long id) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_BY_EXIST, new MapSqlParameterSource("id", id), userExistMapper);
+            return Boolean.TRUE.equals(jdbcTemplate.queryForObject(SELECT_BY_EXIST, new MapSqlParameterSource("id", id), Boolean.class));
+
         } catch (Exception e) {
             throw DataBaseException.create(e.getMessage());
         }
@@ -87,7 +84,6 @@ public class UserRepository {
         params.addValue("id", user.getId());
         params.addValue("name", user.getName());
         params.addValue("email", user.getEmail());
-        params.addValue("create_date", LocalDateTime.now());
 
         return params;
     }
@@ -95,7 +91,7 @@ public class UserRepository {
     private RuntimeException handleDbExceptionMessage (final Exception e, final User user) throws DataBaseException{
         if (e instanceof EmptyResultDataAccessException) {
             return NoDataFoundException.create(String.format("Пользователь не найден {id = %s}", user.getId()));
-        } else if (e.getMessage().contains("user_uk1")) {
+        } if (e.getMessage().contains("user_uk1")) {
             return DataBaseException.create(String.format("Пользователь с электронной почтой \" %s \" - уже существует", user.getEmail()));
         } else {
             return DataBaseException.create(e.getMessage());
