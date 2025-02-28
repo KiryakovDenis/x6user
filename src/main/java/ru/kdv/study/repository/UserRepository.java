@@ -13,14 +13,13 @@ import ru.kdv.study.repository.mapper.UserMapper;
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
-    private static String INSERT = """
-            INSERT 
-              INTO user_service."user" ("name", email) 
+    private static final String INSERT = """
+            INSERT INTO user_service."user" ("name", email) 
             VALUES(:name, :email)
             RETURNING *
             """;
 
-    private static String UPDATE = """
+    private static final String UPDATE = """
             UPDATE user_service."user"
                SET name = :name,
                    email = :email
@@ -28,13 +27,13 @@ public class UserRepository {
             RETURNING *
             """;
 
-    private static String SELECT_BY_ID = """
+    private static final String SELECT_BY_ID = """
             SELECT *
               FROM user_service."user"
              WHERE id = :id
             """;
 
-    private static String SELECT_BY_EXIST = """
+    private static final String SELECT_BY_EXIST = """
             SELECT exists(SELECT 1
                             FROM user_service."user" u
                            WHERE u.id = :id) as value
