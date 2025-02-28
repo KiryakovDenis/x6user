@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final String REGEX_EMAIL_PATTERN_RFC5322 = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private final UserRepository userRepository;
 
     @Transactional(rollbackFor = Exception.class)
@@ -47,13 +46,14 @@ public class UserService {
             throw BadRequestException.create("Поле email должно быть заполнено.");
         }
 
-        if (!emailIsValid(user.getEmail(), REGEX_EMAIL_PATTERN_RFC5322)) {
+        if (!emailIsValid(user.getEmail())) {
             throw BadRequestException.create("Поле email заполнено некорректно.");
         }
     }
 
-    private boolean emailIsValid(String email, String regex) {
-        return Pattern.compile(regex)
+    private boolean emailIsValid(String email) {
+        String emailPatterRFC3522 = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        return Pattern.compile(emailPatterRFC3522)
                 .matcher(email)
                 .matches();
     }
