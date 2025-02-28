@@ -30,7 +30,7 @@ public class ExceptionController {
 
     @ExceptionHandler(NoDataFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ServiceError> hadleNoDataFoundException(NoDataFoundException e) {
+    public ResponseEntity<ServiceError> handleNoDataFoundException(NoDataFoundException e) {
         log.error("ExceptionController#NoDataFoundException", e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ServiceError(e.getMessage()));

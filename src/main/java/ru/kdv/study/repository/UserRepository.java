@@ -10,8 +10,6 @@ import ru.kdv.study.exception.NoDataFoundException;
 import ru.kdv.study.model.User;
 import ru.kdv.study.repository.mapper.UserMapper;
 
-import java.time.LocalDateTime;
-
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
