@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("user/exist/{id}")
     @Operation(summary = "Проверить наличие пользователя по id")
-    public Boolean userExists(@PathVariable final Long id) {
+    public boolean userExists(@PathVariable final Long id) {
         return userService.userExist(id);
     }
 }

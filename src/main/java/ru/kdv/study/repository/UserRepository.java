@@ -72,7 +72,6 @@ public class UserRepository {
     public boolean userExist(Long id) {
         try {
             return Boolean.TRUE.equals(jdbcTemplate.queryForObject(SELECT_BY_EXIST, new MapSqlParameterSource("id", id), Boolean.class));
-
         } catch (Exception e) {
             throw DataBaseException.create(e.getMessage());
         }

@@ -33,7 +33,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Boolean userExist(final Long id) {
+    public boolean userExist(final Long id) {
         return userRepository.userExist(id);
     }
 
@@ -52,7 +52,7 @@ public class UserService {
     }
 
     private boolean emailIsValid(String email) {
-        String emailPatterRFC3522 = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        final String emailPatterRFC3522 = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
         return Pattern.compile(emailPatterRFC3522)
                 .matcher(email)
                 .matches();
