@@ -37,7 +37,7 @@ public class UserController {
         return userService.getById(id);
     }
 
-    @PostMapping("user/exist/{id}")
+    @GetMapping("/exist/{id}")
     @Operation(summary = "Проверить наличие пользователя по id")
     public boolean userExists(@PathVariable final Long id) {
         return userService.userExist(id);

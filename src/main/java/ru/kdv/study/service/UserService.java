@@ -1,6 +1,7 @@
 package ru.kdv.study.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -28,11 +29,13 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value="x6User", key="#id")
     public User getById(final Long id) {
         return userRepository.getById(id);
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value="x6UserExist", key="#id")
     public boolean userExist(final Long id) {
         return userRepository.userExist(id);
     }
