@@ -65,9 +65,7 @@ public class UserServiceTest {
                         String.format("Пользователь с электронной почтой \" %s \" - уже существует", validUser.getEmail()))
                 );
 
-        DataBaseException dataBaseException = assertThrows(DataBaseException.class, () -> {
-            userService.createUser(validUser);
-        });
+        DataBaseException dataBaseException = assertThrows(DataBaseException.class, () -> userService.createUser(validUser));
 
         verify(userRepository).insert(validUser);
     }
@@ -80,9 +78,7 @@ public class UserServiceTest {
                         String.format("Пользователь с электронной почтой \" %s \" - уже существует", validUser.getEmail()))
                 );
 
-        DataBaseException dataBaseException = assertThrows(DataBaseException.class, () -> {
-            userService.update(validUser);
-        });
+        DataBaseException dataBaseException = assertThrows(DataBaseException.class, () -> userService.update(validUser));
 
         verify(userRepository).update(validUser);
     }
@@ -98,9 +94,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("Валидация null в качестве имени пользователя")
     public void validateUserNameIsNull() {
-        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> {
-            userService.createUser(userNameIsNull);
-        });
+        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> userService.createUser(userNameIsNull));
     }
 
     private final User userNameIsEmpty = new User(
@@ -113,9 +107,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("Валидация пустой строки в качестве имени пользователя")
     public void validateUserNameIsEmpty() {
-        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> {
-            userService.createUser(userNameIsEmpty);
-        });
+        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> userService.createUser(userNameIsEmpty));
     }
 
 
@@ -129,8 +121,6 @@ public class UserServiceTest {
     @Test
     @DisplayName("Валидация неправильно заполненного email")
     public void validateUserBadEmail() {
-        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> {
-            userService.createUser(userBadEmail);
-        });
+        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> userService.createUser(userBadEmail));
     }
 }

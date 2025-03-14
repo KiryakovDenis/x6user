@@ -14,7 +14,7 @@ import ru.kdv.study.repository.mapper.UserMapper;
 @RequiredArgsConstructor
 public class UserRepository {
     private static final String INSERT = """
-            INSERT INTO user_service."user" ("name", email) 
+            INSERT INTO user_service."user" ("name", email)
             VALUES(:name, :email)
             RETURNING *
             """;

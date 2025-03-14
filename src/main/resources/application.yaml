@@ -17,3 +17,11 @@ spring:
 springdoc:
   swagger-ui:
     path: swagger-ui
+  open-api:
+    info:
+      title: Users API
+      description: API Микросервиса пользователей для системы Marketplace
+      version: 1.0.0
+      contact:
+        name: Kiryakov Denis
+        email: mail@mail.ru
