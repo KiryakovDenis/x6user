@@ -1,0 +1,1 @@
+ALTER TABLE user_service."user" ALTER COLUMN create_date set DEFAULT current_timestamp;
