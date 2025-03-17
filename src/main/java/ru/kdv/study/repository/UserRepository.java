@@ -87,7 +87,7 @@ public class UserRepository {
     private RuntimeException handleDbExceptionMessage (final Exception e, final User user) throws DataBaseException{
         if (e instanceof EmptyResultDataAccessException) {
             return NoDataFoundException.create(String.format("Пользователь не найден {id = %s}", user.getId()));
-        } if (e.getMessage().contains("user_uk1")) {
+        } else if (e.getMessage().contains("user_uk1")) {
             return DataBaseException.create(String.format("Пользователь с электронной почтой \" %s \" - уже существует", user.getEmail()));
         } else {
             return DataBaseException.create(e.getMessage());
